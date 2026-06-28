@@ -44,6 +44,54 @@
                 '</div>';
         } ).join( '' );
 
+        // ── Pro block + CTA vary by license state ──────────────────
+        var proState = config.proState || 'none';
+        var proBlock = '';
+        var ctaHtml  = '';
+
+        if ( proState === 'active' ) {
+            // Paying customer — thank them, never upsell.
+            proBlock =
+                '<div class="fme-welcome-pro fme-welcome-pro--active">' +
+                '<div class="fme-welcome-pro__icon">★</div>' +
+                '<div class="fme-welcome-pro__text">' +
+                '<p class="fme-welcome-pro__title">You\'re on Footnotes Made Easy Pro</p>' +
+                '<p class="fme-welcome-pro__desc">Thanks for your support. Citations, the Citation Library, and all Pro tools are ready to use.</p>' +
+                '</div>' +
+                '</div>';
+            ctaHtml =
+                '<button type="button" class="fme-welcome-modal__cta" id="fme-welcome-cta" data-action="dismiss">Explore your Pro features →</button>';
+
+        } else if ( proState === 'inactive' ) {
+            // Pro installed but not licensed — open the same Freemius license
+            // activation dialog the other "Activate license" buttons use.
+            proBlock =
+                '<div class="fme-welcome-pro">' +
+                '<div class="fme-welcome-pro__icon">🔑</div>' +
+                '<div class="fme-welcome-pro__text">' +
+                '<p class="fme-welcome-pro__title">Activate your Pro license</p>' +
+                '<p class="fme-welcome-pro__desc">Enter your license key to unlock citations, the Citation Library, and Classic Editor &amp; Gutenberg support.</p>' +
+                '</div>' +
+                '</div>';
+            ctaHtml =
+                '<button type="button" class="fme-welcome-modal__cta" id="fme-welcome-cta" data-action="activate-license">Activate license →</button>' +
+                '<button type="button" class="fme-welcome-modal__cta-secondary" id="fme-welcome-dismiss" data-action="dismiss">Maybe later</button>';
+
+        } else {
+            // Free user — the main conversion moment.
+            proBlock =
+                '<div class="fme-welcome-pro">' +
+                '<div class="fme-welcome-pro__icon">🚀</div>' +
+                '<div class="fme-welcome-pro__text">' +
+                '<p class="fme-welcome-pro__title">Footnotes Made Easy Pro is here</p>' +
+                '<p class="fme-welcome-pro__desc">Academic citations in APA, MLA, Chicago &amp; Harvard · Reusable Citation Library · Classic Editor &amp; Gutenberg support</p>' +
+                '</div>' +
+                '</div>';
+            ctaHtml =
+                '<a href="' + ( config.proUrl || '#' ) + '" target="_blank" rel="noopener noreferrer" class="fme-welcome-modal__cta" id="fme-welcome-cta" data-action="link">See Pro features →</a>' +
+                '<button type="button" class="fme-welcome-modal__cta-secondary" id="fme-welcome-dismiss" data-action="dismiss">Explore the free version</button>';
+        }
+
         var html =
             // Loader
             '<div class="fme-page-loader" id="fme-page-loader">' +
@@ -64,7 +112,7 @@
             '<div class="fme-welcome-modal__hero">' +
             '<div class="fme-welcome-modal__badge">✦ ' + ( config.isUpdate ? 'Updated to ' : 'Welcome to ' ) + 'v' + ( config.version || '3.2' ) + '</div>' +
             '<h2 class="fme-welcome-modal__title" id="fme-welcome-title">Footnotes Made Easy,<br>completely redesigned</h2>' +
-            '<p class="fme-welcome-modal__subtitle">A brand new interface, more controls, and the foundation for powerful Pro features — all in one update.</p>' +
+            '<p class="fme-welcome-modal__subtitle">A brand new interface, more controls, and now — Footnotes Made Easy Pro.</p>' +
             '</div>' +
 
             // Body
@@ -72,17 +120,11 @@
             '<p class="fme-welcome-modal__section-label">What\'s new</p>' +
             '<div class="fme-welcome-features">' + featuresHtml + '</div>' +
 
-            // Pro teaser
-            '<div class="fme-welcome-pro">' +
-            '<div class="fme-welcome-pro__icon">🚀</div>' +
-            '<div class="fme-welcome-pro__text">' +
-            '<p class="fme-welcome-pro__title">Footnotes Made Easy Pro — coming soon</p>' +
-            '<p class="fme-welcome-pro__desc">Citations in APA, MLA &amp; Chicago · Reusable Footnote Library · Gutenberg sidebar panel</p>' +
-            '</div>' +
-            '</div>' +
+            // Pro block (state-aware)
+            proBlock +
 
-            // CTA
-            '<button type="button" class="fme-welcome-modal__cta" id="fme-welcome-cta">Explore Footnotes Made Easy →</button>' +
+            // CTA (state-aware)
+            '<div class="fme-welcome-modal__actions">' + ctaHtml + '</div>' +
 
             '</div>' + // body
             '</div>' + // modal
@@ -111,6 +153,46 @@
         } );
     }
 
+    // ── Open the Freemius license-activation dialog ───────────
+    // Dismisses the welcome modal, then forwards to the same trigger the
+    // plugin's other "Activate license" buttons use. Freemius binds a click
+    // handler to `.activate-license-trigger.{slug}` that opens its dialog.
+
+    function openLicenseActivation() {
+        dismiss();
+
+        // Defer so the welcome overlay is gone before the Freemius dialog opens.
+        setTimeout( function () {
+            var trigger = document.querySelector( '.activate-license-trigger.footnotes-made-easy' );
+            if ( trigger ) {
+                trigger.click();
+                return;
+            }
+            // Fallback: Freemius exposes a global helper on some versions.
+            if ( window.FS && typeof window.FS.showActivation === 'function' ) {
+                window.FS.showActivation();
+                return;
+            }
+            // Last resort: send them to their account so the button is never a dead end.
+            if ( config.accountUrl ) {
+                window.open( config.accountUrl, '_blank', 'noopener' );
+            }
+        }, 50 );
+    }
+
+    // ── Mark the welcome modal as shown (so it doesn't reappear) ──
+
+    function markShown() {
+        if ( config.ajaxUrl && config.nonce ) {
+            fetch( config.ajaxUrl, {
+                method:  'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body:    'action=fme_dismiss_welcome&nonce=' + config.nonce,
+                keepalive: true,
+            } );
+        }
+    }
+
     // ── Dismiss and show loader ───────────────────────────────
 
     function dismiss() {
@@ -128,14 +210,7 @@
             }, 2000 );
         }
 
-        // Mark as shown via AJAX
-        if ( config.ajaxUrl && config.nonce ) {
-            fetch( config.ajaxUrl, {
-                method:  'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body:    'action=fme_dismiss_welcome&nonce=' + config.nonce,
-            } );
-        }
+        markShown();
     }
 
     // ── Init ─────────────────────────────────────────────────
@@ -143,12 +218,32 @@
     document.addEventListener( 'DOMContentLoaded', function () {
         buildModal();
 
-        var closeBtn = document.getElementById( 'fme-welcome-close' );
-        var ctaBtn   = document.getElementById( 'fme-welcome-cta' );
-        var overlay  = document.getElementById( 'fme-welcome-overlay' );
+        var closeBtn   = document.getElementById( 'fme-welcome-close' );
+        var ctaBtn     = document.getElementById( 'fme-welcome-cta' );
+        var dismissBtn = document.getElementById( 'fme-welcome-dismiss' );
+        var overlay    = document.getElementById( 'fme-welcome-overlay' );
 
         if ( closeBtn ) closeBtn.addEventListener( 'click', dismiss );
-        if ( ctaBtn )   ctaBtn.addEventListener(   'click', dismiss );
+
+        // The primary CTA may be a dismiss button (active state), an external
+        // link (free state), or the license-activation trigger (inactive state).
+        if ( ctaBtn ) {
+            ctaBtn.addEventListener( 'click', function ( e ) {
+                var action = ctaBtn.getAttribute( 'data-action' );
+                if ( action === 'link' ) {
+                    // External link opening in a new tab — current page stays put,
+                    // so the async markShown() completes fine.
+                    markShown();
+                } else if ( action === 'activate-license' ) {
+                    openLicenseActivation();
+                } else {
+                    dismiss();
+                }
+            } );
+        }
+
+        // Secondary "maybe later" / "explore free" button always dismisses.
+        if ( dismissBtn ) dismissBtn.addEventListener( 'click', dismiss );
 
         // Escape key
         document.addEventListener( 'keydown', function ( e ) {

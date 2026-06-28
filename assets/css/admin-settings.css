@@ -1844,9 +1844,50 @@ body.fme-citations-locked .fme-settings-main {
     font-family: inherit;
     transition: background 0.15s;
     box-sizing: border-box;
+    text-decoration: none;
 }
 .fme-welcome-modal__cta:hover {
     background: #433aa0;
+    color: #fff;
+}
+
+/* Actions wrapper holds the primary CTA and optional secondary dismiss */
+.fme-welcome-modal__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Secondary "maybe later" / "explore free" button */
+.fme-welcome-modal__cta-secondary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 9px 24px;
+    background: transparent;
+    color: #646970;
+    border: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    transition: color 0.15s, background 0.15s;
+    box-sizing: border-box;
+}
+.fme-welcome-modal__cta-secondary:hover {
+    color: #1d2327;
+    background: #f0f0f1;
+}
+
+/* Active-licence variant of the Pro block — celebratory, not an upsell */
+.fme-welcome-pro--active {
+    background: #f3fbf4;
+    border-color: #c6e9cb;
+}
+.fme-welcome-pro--active .fme-welcome-pro__title {
+    color: #1a7f37;
 }
 
 /* Page loader */
@@ -1892,361 +1933,168 @@ body.fme-citations-locked .fme-settings-main {
     }
 }
 
-/* ── Pro Coming Soon page ────────────────────────────── */
-.fme-pro-coming-soon {
-    max-width: 860px;
-    margin: 0 auto;
-    padding-bottom: 40px;
-}
+/* ── Footnotes Made Easy Suite card ──────────────────────────────────────── */
 
-/* Hero */
-.fme-cs-hero {
-    background: linear-gradient( 145deg, #534AB7 0%, #3d3494 60%, #2a2468 100% );
-    border-radius: 16px;
-    padding: 48px 48px 40px;
-    text-align: center;
-    color: #fff;
-    margin-bottom: 32px;
+.fme-suite-card {
+    background: linear-gradient( 160deg, #3C3489 0%, #2a2468 100% );
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
     position: relative;
     overflow: hidden;
 }
-.fme-cs-hero::before {
-    content: '';
-    position: absolute;
-    top: -60px; right: -60px;
-    width: 220px; height: 220px;
-    background: rgba(255,255,255,0.04);
-    border-radius: 50%;
+.fme-suite-card__head {
+    margin-bottom: 16px;
 }
-.fme-cs-hero::after {
-    content: '';
-    position: absolute;
-    bottom: -40px; left: -40px;
-    width: 160px; height: 160px;
-    background: rgba(255,255,255,0.04);
-    border-radius: 50%;
-}
-.fme-cs-hero__badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(255,255,255,0.15);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 20px;
-    padding: 5px 14px;
-    font-size: 11px;
+.fme-suite-card__title {
+    font-size: 17px;
     font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.9);
-    margin-bottom: 20px;
-}
-.fme-cs-hero__title {
-    font-size: 36px;
-    font-weight: 800;
     color: #fff;
-    margin: 0 0 6px;
-    line-height: 1.15;
-    position: relative;
+    margin: 0 0 8px;
 }
-.fme-cs-hero__pro {
-    display: inline-block;
-    background: rgba(255,255,255,0.18);
-    border: 1px solid rgba(255,255,255,0.3);
-    border-radius: 8px;
-    padding: 2px 12px;
-    font-size: 26px;
-    margin-left: 6px;
-    vertical-align: middle;
-}
-.fme-cs-hero__sub {
-    font-size: 15px;
-    color: rgba(255,255,255,0.8);
-    line-height: 1.7;
-    margin: 0 auto 32px;
-    max-width: 560px;
-    position: relative;
-}
-
-/* Countdown */
-.fme-cs-countdown {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(0,0,0,0.2);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 12px;
-    padding: 16px 28px;
-    margin-bottom: 32px;
-    position: relative;
-}
-.fme-cs-countdown__unit {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 48px;
-}
-.fme-cs-countdown__num {
-    font-size: 32px;
-    font-weight: 800;
-    color: #fff;
-    line-height: 1;
-    font-variant-numeric: tabular-nums;
-}
-.fme-cs-countdown__label {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: rgba(255,255,255,0.5);
-    margin-top: 4px;
-}
-.fme-cs-countdown__sep {
-    font-size: 28px;
-    font-weight: 300;
-    color: rgba(255,255,255,0.3);
-    line-height: 1;
-    margin-bottom: 14px;
-}
-
-/* Signup form */
-.fme-cs-signup { position: relative; }
-.fme-cs-signup__label {
+.fme-suite-card__desc {
     font-size: 13px;
-    color: rgba(255,255,255,0.7);
-    margin: 0 0 12px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.78);
+    margin: 0;
 }
-.fme-cs-form {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-.fme-cs-form__input {
-    padding: 10px 18px;
-    border: 1.5px solid rgba(255,255,255,0.25);
-    border-radius: 8px;
-    background: rgba(255,255,255,0.1);
-    color: #fff;
-    font-size: 14px;
-    width: 280px;
-    font-family: inherit;
-    transition: border-color 0.15s;
-}
-.fme-cs-form__input::placeholder { color: rgba(255,255,255,0.45); }
-.fme-cs-form__input:focus { border-color: rgba(255,255,255,0.6); outline: none; }
-.fme-cs-form__btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 22px;
-    background: #fff;
-    color: #534AB7;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    font-family: inherit;
-    transition: background 0.15s, transform 0.1s;
-}
-.fme-cs-form__btn:hover { background: #f0eeff; transform: translateY(-1px); }
-.fme-cs-form__notice {
-    font-size: 11px;
-    color: rgba(255,255,255,0.4);
-    margin: 10px 0 0;
-}
-.fme-cs-success {
+
+/* Product rows */
+.fme-suite-row {
     display: flex;
     align-items: center;
     gap: 10px;
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 8px;
-    padding: 14px 20px;
-    font-size: 14px;
-    color: #fff;
-    justify-content: center;
-}
-
-/* Features section */
-.fme-cs-section {
-    margin-bottom: 32px;
-}
-.fme-cs-section__title {
-    font-size: 20px;
-    font-weight: 700;
-    color: #1d2327;
-    margin: 0 0 20px;
-    text-align: center;
-}
-.fme-cs-features {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-}
-.fme-cs-feature {
     background: #fff;
-    border: 1px solid #e2e4e7;
     border-radius: 10px;
-    padding: 20px;
-    transition: box-shadow 0.15s, border-color 0.15s;
+    padding: 12px;
+    margin-bottom: 12px;
 }
-.fme-cs-feature:hover {
-    border-color: #534AB7;
-    box-shadow: 0 4px 16px rgba(83,74,183,0.1);
+.fme-suite-row:last-of-type {
+    margin-bottom: 0;
 }
-.fme-cs-feature__icon {
-    width: 36px; height: 36px;
-    background: #f0eeff;
-    border-radius: 8px;
+.fme-suite-row__icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 12px;
-    color: #534AB7;
-}
-.fme-cs-feature__icon svg { width: 18px; height: 18px; }
-.fme-cs-feature__title {
-    font-size: 13px;
-    font-weight: 700;
-    color: #1d2327;
-    margin: 0 0 6px;
-}
-.fme-cs-feature__desc {
-    font-size: 12px;
-    color: #646970;
-    line-height: 1.6;
-    margin: 0;
-}
-
-/* Pricing teaser */
-.fme-cs-pricing {
-    background: #f9f8ff;
-    border: 1px solid #ddd9f7;
-    border-radius: 12px;
-    padding: 32px;
-    text-align: center;
-    margin-bottom: 24px;
-}
-.fme-cs-pricing__title {
-    font-size: 18px;
-    font-weight: 700;
-    color: #1d2327;
-    margin: 0 0 6px;
-}
-.fme-cs-pricing__sub {
-    font-size: 13px;
-    color: #646970;
-    margin: 0 0 24px;
-}
-.fme-cs-pricing__cards {
-    display: flex;
-    gap: 14px;
-    justify-content: center;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-}
-.fme-cs-pricing__card {
-    background: #fff;
-    border: 1px solid #e2e4e7;
-    border-radius: 10px;
-    padding: 20px 32px;
-    min-width: 160px;
-    position: relative;
-}
-.fme-cs-pricing__card--featured {
-    border-color: #534AB7;
-    box-shadow: 0 0 0 3px rgba(83,74,183,0.1);
-}
-.fme-cs-pricing__badge {
-    position: absolute;
-    top: -11px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #534AB7;
     color: #fff;
-    font-size: 10px;
+}
+.fme-suite-row__icon svg {
+    width: 20px;
+    height: 20px;
+}
+.fme-suite-row__icon img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+.fme-suite-row__icon--free {
+    background: #534AB7;
+}
+.fme-suite-row__icon--pro {
+    background: #16A34A;
+}
+.fme-suite-row__body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+.fme-suite-row__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+    row-gap: 4px;
+}
+.fme-suite-row__name {
+    font-size: 13px;
     font-weight: 700;
-    padding: 2px 10px;
-    border-radius: 10px;
-    white-space: nowrap;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-}
-.fme-cs-pricing__plan {
-    font-size: 12px;
-    font-weight: 600;
-    color: #646970;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 8px;
-}
-.fme-cs-pricing__price {
-    font-size: 28px;
-    font-weight: 800;
     color: #1d2327;
-    line-height: 1;
+    line-height: 1.3;
+    white-space: nowrap;
 }
-.fme-cs-pricing__price span {
-    font-size: 14px;
-    font-weight: 400;
-    color: #646970;
-}
-.fme-cs-pricing__sites {
+.fme-suite-row__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     font-size: 12px;
     color: #646970;
-    margin-top: 6px;
 }
-.fme-cs-pricing__lifetime {
+.fme-suite-row__status--active {
+    color: #15803d;
+}
+.fme-suite-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #c3c4c7;
+    flex-shrink: 0;
+}
+.fme-suite-dot--on {
+    background: #16a34a;
+}
+.fme-suite-dot--warn {
+    background: #d97919;
+}
+.fme-suite-row__status--installed {
+    color: #b45309;
+}
+.fme-suite-row__link {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
     font-size: 12px;
-    color: #646970;
-    margin: 0;
-}
-
-/* Footer CTA */
-.fme-cs-footer-cta {
-    text-align: center;
-    padding: 20px 0;
-    border-top: 1px solid #f0f0f1;
-}
-.fme-cs-footer-cta p {
-    font-size: 13px;
-    color: #646970;
-    margin: 0 0 6px;
-}
-.fme-cs-footer-cta__link {
-    font-size: 13px;
     font-weight: 600;
     color: #534AB7;
     text-decoration: none;
+    white-space: nowrap;
 }
-.fme-cs-footer-cta__link:hover { text-decoration: underline; }
-
-@media screen and ( max-width: 700px ) {
-    .fme-cs-hero { padding: 32px 20px 28px; }
-    .fme-cs-hero__title { font-size: 26px; }
-    .fme-cs-countdown { padding: 12px 16px; }
-    .fme-cs-countdown__num { font-size: 24px; }
-    .fme-cs-features { grid-template-columns: 1fr 1fr; }
-    .fme-cs-form { flex-direction: column; align-items: center; }
-    .fme-cs-form__input { width: 100%; }
+.fme-suite-row__link:hover {
+    color: #3C3489;
 }
-@media screen and ( max-width: 480px ) {
-    .fme-cs-features { grid-template-columns: 1fr; }
+.fme-suite-row__link svg {
+    width: 13px;
+    height: 13px;
 }
 
-/* ── Coming soon form button spinner ─────────────────── */
-.fme-cs-btn-spinner {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    border: 2px solid rgba(255,255,255,0.35);
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: fme-cs-spin 0.6s linear infinite;
-    vertical-align: middle;
-    margin-right: 2px;
+/* Footer upsell strip */
+.fme-suite-card__foot {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+    padding: 14px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
 }
-@keyframes fme-cs-spin {
-    to { transform: rotate(360deg); }
+.fme-suite-card__foot-star {
+    flex-shrink: 0;
+    color: #F19727;
+}
+.fme-suite-card__foot-star svg {
+    width: 22px;
+    height: 22px;
+}
+.fme-suite-card__foot-text {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.9);
+}
+.fme-suite-card__foot-link {
+    color: #F19727;
+    font-weight: 700;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+.fme-suite-card__foot-link:hover {
+    color: #ffb454;
 }

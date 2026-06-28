@@ -48,6 +48,9 @@ $fme_allowed_tip_html = [
     'a'      => [ 'href' => [], 'target' => [], 'rel' => [] ],
     'strong' => [],
 ];
+
+// FME brand icon (same mark used in the page topbar), reused in the suite rows.
+$fme_suite_icon = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAADKklEQVR4nJWWTUhVURDH5/qelRRFm8QohAoSij4kiYhoXZFhkVHZUqJFEUQQbdoGLYIoghYVBRHVIogMV7aRWrUK+kD6NrMvKNNM372/FnfGO+9431MHDuecmf+ZM+ecmf+9AsgM2yXgDzCs4xmtny6wqP0pUkmAWMcnAkzVVpTpCdpvFZFE54hIJCKbAkxVqdE+EpGCm4cSaf9JMTj9YIAJpaAtEhEp6iTWZkHYCUJ5n6N7WSXIyPkVESnUqKJRRHaJyFrJrizvul8HDkVEXmnvAyzqPBGRFhFpFZEGEYkFaAd+uWS4BSzSRy4AkTYB1igmUfw4sExthivovB6467DfgVYBfrvFZvwC7HXZVav9fOArmbwFZuVk6X6HS9Q3QL8Af92GsTMCXHEOrX/q7F2qm6P9XOCas5fU55gdRIBOpzDQuNv4ObDORX/VYc85/RagzwU/rr5MhoH9Bl5NyhoDlMuo9v+Ao4o97Oy7VXeGjAhGKZd3wFn0rS0xbOMFwCGgO1hob3sJ2Eh6I8NAC3AnwAAMAfeANqDO+S9MDJhMTcuBk6Rv5p29IOXSIY3epAT0AEeAJYGvIprpIddFaqzJ2bwTeBxcVwI8BDqApcEaO0Tk9VNRmUmsRRznYGPJGGtqqXKly4BjQC9ZQgC81/f7A3wITtsLHAcac660QE7SLNTr6SKrT3MGcJM0af7pphuA2wEGYAR4AOwjTcRJSbOetMgHgzeyTE2A04ptd/Y9ZGWRBGtMPgMXSUtPrK78lYWF3wdsdlFecNjzTr8VeKP6vMIfAw4YlxrfxQHoJildeWrrcfZu1c3Wfh5wIwjeU9s3IWVxi8oz+0EXvZF3HdDvHL5xtlqH73B+PXl/FFJ6+umM98lqKvw8NeVcU6XP02JStrFD/AB2WkQNwHagmfJUDsdt7qps420uuLy1zcAO3WOiYAe0iWT/NaWcsl1l5et0K0XkUUAWJefnmdMXisoUkQPksYnJihxdUwVsYpu4eWz/LUyxkS1u1HHk9PXOR56U+a3EpaEYrkfH9kdWIyJP1FbpN7Fc3ONWa5FLjOuktDcCXJ7m+on2H5S5Yr5ZGq25AAAAAElFTkSuQmCC';
 ?>
 <aside class="fme-settings-sidebar">
 
@@ -67,28 +70,99 @@ $fme_allowed_tip_html = [
         <p class="fme-tip-card__text" style="color:#78350f;"><?php esc_html_e( 'Footnotes Made Easy Pro is installed but not yet licensed. Please contact your network administrator to activate the license.', 'footnotes-made-easy' ); ?></p>
     </div>
 
-    <?php elseif ( defined( 'FME_PRO_VERSION' ) && ! $fme_pro_active && $fme_show_upsell ) : ?>
-    <!-- Pro installed but license inactive — prompt to activate -->
-    <div class="fme-upgrade-card">
-        <div class="fme-upgrade-card__icon" aria-hidden="true">🔑</div>
-        <h3 class="fme-upgrade-card__heading"><?php esc_html_e( 'Activate your license', 'footnotes-made-easy' ); ?></h3>
-        <p class="fme-upgrade-card__text"><?php esc_html_e( 'Footnotes Made Easy Pro is installed. Activate your license to unlock Citations, Library, and the Gutenberg sidebar panel.', 'footnotes-made-easy' ); ?></p>
-        <a href="#" class="fme-upgrade-card__btn activate-license-trigger footnotes-made-easy">
-            <?php esc_html_e( 'Activate license', 'footnotes-made-easy' ); ?>
-            <svg viewBox="0 0 13 13" fill="none"><path d="M2.5 6.5h8M7 3.5l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-    </div>
-
     <?php elseif ( $fme_show_upsell ) : ?>
-    <!-- Upgrade nudge — Pro not installed -->
-    <div class="fme-upgrade-card">
-        <div class="fme-upgrade-card__icon" aria-hidden="true">✦</div>
-        <h3 class="fme-upgrade-card__heading"><?php esc_html_e( 'Upgrade to Pro', 'footnotes-made-easy' ); ?></h3>
-        <p class="fme-upgrade-card__text"><?php esc_html_e( 'Unlock Citations, a reusable Footnote Library, and a Gutenberg sidebar panel — all in one upgrade.', 'footnotes-made-easy' ); ?></p>
-        <a href="<?php echo esc_url( swas_wp_footnotes::get_admin_page_url( 'footnotes-pro' ) ); ?>" class="fme-upgrade-card__btn">
-            <?php esc_html_e( 'Learn more', 'footnotes-made-easy' ); ?>
-            <svg viewBox="0 0 13 13" fill="none"><path d="M2.5 6.5h8M7 3.5l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
+    <?php
+    // Suite card states:
+    //   $fme_pro_installed_unlicensed — Pro plugin present but no active license
+    //                                   (offer "Activate"); otherwise Pro is not
+    //                                   installed at all (offer "Get Pro").
+    $fme_pro_installed_unlicensed = defined( 'FME_PRO_VERSION' ) && ! $fme_pro_active;
+    ?>
+    <!-- Footnotes Made Easy Suite card -->
+    <div class="fme-suite-card">
+        <div class="fme-suite-card__head">
+            <h3 class="fme-suite-card__title"><?php esc_html_e( 'Footnotes Made Easy Suite', 'footnotes-made-easy' ); ?></h3>
+            <p class="fme-suite-card__desc"><?php esc_html_e( 'From simple footnotes to full academic citations — everything you need to reference sources beautifully in WordPress.', 'footnotes-made-easy' ); ?></p>
+        </div>
+
+        <!-- Free row -->
+        <div class="fme-suite-row">
+            <span class="fme-suite-row__icon fme-suite-row__icon--free" aria-hidden="true">
+                <img src="<?php echo esc_attr( $fme_suite_icon ); ?>" alt="" width="20" height="20" />
+            </span>
+            <div class="fme-suite-row__body">
+                <span class="fme-suite-row__name"><?php esc_html_e( 'Footnotes Made Easy Free', 'footnotes-made-easy' ); ?></span>
+                <div class="fme-suite-row__meta">
+                    <span class="fme-suite-row__status fme-suite-row__status--active">
+                        <span class="fme-suite-dot fme-suite-dot--on"></span><?php esc_html_e( 'Active', 'footnotes-made-easy' ); ?>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pro row -->
+        <div class="fme-suite-row">
+            <span class="fme-suite-row__icon fme-suite-row__icon--pro" aria-hidden="true">
+                <img src="<?php echo esc_attr( $fme_suite_icon ); ?>" alt="" width="20" height="20" />
+            </span>
+            <div class="fme-suite-row__body">
+                <span class="fme-suite-row__name"><?php esc_html_e( 'Footnotes Made Easy Pro', 'footnotes-made-easy' ); ?></span>
+                <div class="fme-suite-row__meta">
+                    <?php if ( $fme_pro_active ) : ?>
+                    <span class="fme-suite-row__status fme-suite-row__status--active">
+                        <span class="fme-suite-dot fme-suite-dot--on"></span><?php esc_html_e( 'Active', 'footnotes-made-easy' ); ?>
+                    </span>
+                    <?php elseif ( $fme_pro_installed_unlicensed ) : ?>
+                    <span class="fme-suite-row__status fme-suite-row__status--installed">
+                        <span class="fme-suite-dot fme-suite-dot--warn"></span><?php esc_html_e( 'Installed', 'footnotes-made-easy' ); ?>
+                    </span>
+                    <?php else : ?>
+                    <span class="fme-suite-row__status">
+                        <span class="fme-suite-dot"></span><?php esc_html_e( 'Inactive', 'footnotes-made-easy' ); ?>
+                    </span>
+                    <?php endif; ?>
+
+                    <?php if ( $fme_pro_installed_unlicensed ) : ?>
+                    <a href="#" class="fme-suite-row__link activate-license-trigger footnotes-made-easy">
+                        <?php esc_html_e( 'Activate license', 'footnotes-made-easy' ); ?>
+                    </a>
+                    <?php elseif ( ! $fme_pro_active ) : ?>
+                    <a href="<?php echo esc_url( FME_PRO_URL ); ?>" target="_blank" rel="noopener noreferrer" class="fme-suite-row__link">
+                        <?php esc_html_e( 'Get Pro', 'footnotes-made-easy' ); ?>
+                        <svg viewBox="0 0 14 14" fill="none"><path d="M4 10L10 4M5 4h5v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+
+        <?php if ( ! $fme_pro_active ) : ?>
+        <!-- Footer upsell strip -->
+        <div class="fme-suite-card__foot">
+            <span class="fme-suite-card__foot-star" aria-hidden="true">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 2l2.4 5 5.6.8-4 3.9.9 5.5L10 14.5l-4.9 2.7.9-5.5L2 7.8l5.6-.8z"/></svg>
+            </span>
+            <p class="fme-suite-card__foot-text">
+                <?php if ( $fme_pro_installed_unlicensed ) : ?>
+                    <?php
+                    printf(
+                        /* translators: %s: "Activate license" link */
+                        esc_html__( 'Activate your license to unlock citations, a reusable library, and more. %s', 'footnotes-made-easy' ),
+                        '<a href="#" class="fme-suite-card__foot-link activate-license-trigger footnotes-made-easy">' . esc_html__( 'Activate license', 'footnotes-made-easy' ) . '</a>' // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static, safe markup.
+                    );
+                    ?>
+                <?php else : ?>
+                    <?php
+                    printf(
+                        /* translators: %s: "Get Pro" link */
+                        esc_html__( 'Unlock citations, a reusable library, and more. %s', 'footnotes-made-easy' ),
+                        '<a href="' . esc_url( FME_PRO_URL ) . '" target="_blank" rel="noopener noreferrer" class="fme-suite-card__foot-link">' . esc_html__( 'Get Pro', 'footnotes-made-easy' ) . ' ↗</a>' // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- URL and text escaped above.
+                    );
+                    ?>
+                <?php endif; ?>
+            </p>
+        </div>
+        <?php endif; ?>
     </div>
     <?php endif; ?>
 

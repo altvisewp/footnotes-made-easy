@@ -63,7 +63,7 @@ $fme_version = get_plugin_data( plugin_dir_path( __FILE__ ) . '../footnotes-made
             <?php endif; ?>
         </button>
         <?php else : ?>
-        <a href="<?php echo esc_url( swas_wp_footnotes::get_admin_page_url( 'footnotes-pro' ) ); ?>"
+        <a href="<?php echo esc_url( FME_PRO_URL ); ?>" target="_blank" rel="noopener noreferrer"
            class="fme-inner-tab fme-inner-tab--pro fme-inner-tab--link">
             <?php esc_html_e( 'Citations', 'footnotes-made-easy' ); ?>
             <span class="fme-pro-tab-badge">PRO</span>

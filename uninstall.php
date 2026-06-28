@@ -22,3 +22,5 @@ if ( get_option( 'fme_preserve_settings_on_uninstall' ) === '1' ) {
 // Remove all plugin options.
 delete_option( 'swas_footnote_options' );
 delete_option( 'fme_preserve_settings_on_uninstall' );
+delete_option( 'fme_welcome_shown_version' );
+delete_option( 'fme_orphan_cleanup_version' );
