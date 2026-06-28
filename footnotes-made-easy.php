@@ -97,28 +97,6 @@ function fme_enqueue_styles( $hook ) {
         'postedTab'  => isset( $_POST['fme_active_tab'] ) ? sanitize_key( wp_unslash( $_POST['fme_active_tab'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Tab state only; nonce is verified in save_options().
     ) );
 
-    // Feedback modal — available on the Help page
-    if ( 'footnotes-help' === $current_page ) {
-        $plugin_data    = get_plugin_data( __FILE__, false, false );
-        $plugin_version = $plugin_data['Version'] ?? '1.0';
-        wp_localize_script( 'fme-admin-settings', 'fmeFeedback', array(
-            'endpointBugReports'      => 'https://analytics.altvisewp.com/wp-json/altvisewp/v1/bug-reports',
-            'endpointFeatureRequests' => 'https://analytics.altvisewp.com/wp-json/altvisewp/v1/feature-requests',
-            'endpointFeedback'        => 'https://analytics.altvisewp.com/wp-json/altvisewp/v1/feedback',
-            'pluginSlug'    => 'footnotes-made-easy',
-            'pluginVersion' => $plugin_version,
-            'wpVersion'     => get_bloginfo( 'version' ),
-            'siteUrl'       => get_site_url(),
-            'nonce'         => wp_create_nonce( 'fme_feedback_nonce' ),
-            'i18n'          => array(
-                'sending'      => esc_html__( 'Sending…', 'footnotes-made-easy' ),
-                'sent'         => esc_html__( 'Thank you! Your message has been sent.', 'footnotes-made-easy' ),
-                'error'        => esc_html__( 'Something went wrong. Please try again.', 'footnotes-made-easy' ),
-                'submit'       => esc_html__( 'Send message', 'footnotes-made-easy' ),
-            ),
-        ) );
-    }
-
     // Coming Soon / Pro waitlist page — enqueue countdown + signup script
     if ( 'footnotes-pro' === $current_page ) {
         $cs_js_path = plugin_dir_path( __FILE__ ) . 'assets/js/coming-soon.js';

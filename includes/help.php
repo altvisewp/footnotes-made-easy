@@ -188,10 +188,17 @@ $fme_show_upsell = class_exists( 'swas_wp_footnotes' ) ? swas_wp_footnotes::show
                         <span><?php esc_html_e( 'Support forum', 'footnotes-made-easy' ); ?></span>
                         <svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M7 3.5l2.5 2.5L7 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </a>
-                    <button type="button" id="fme-feedback-trigger" class="fme-quicklink-row fme-quicklink-btn" data-type="bug_report">
+                    <?php
+                    // Report a bug routes to priority support for active Pro license
+                    // holders, otherwise to the public GitHub issues tracker.
+                    $fme_bug_url = $fme_pro_active
+                        ? 'https://altvisewp.com/account/#!/support'
+                        : 'https://github.com/altvisewp/footnotes-made-easy/issues';
+                    ?>
+                    <a href="<?php echo esc_url( $fme_bug_url ); ?>" target="_blank" rel="noopener noreferrer" class="fme-quicklink-row">
                         <span><?php esc_html_e( 'Report a bug', 'footnotes-made-easy' ); ?></span>
                         <svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M7 3.5l2.5 2.5L7 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </button>
+                    </a>
                     <a href="https://docs.altvisewp.com/footnotes-made-easy/faq" target="_blank" rel="noopener noreferrer" class="fme-quicklink-row">
                         <span><?php esc_html_e( 'Frequently asked questions', 'footnotes-made-easy' ); ?></span>
                         <svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6h7M7 3.5l2.5 2.5L7 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>

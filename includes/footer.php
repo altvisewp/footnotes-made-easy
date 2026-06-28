@@ -19,7 +19,18 @@ defined( 'ABSPATH' ) || exit;
     <nav class="fme-page-footer__links">
         <a href="https://altvisewp.com/blog/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Our blog', 'footnotes-made-easy' ); ?></a>
         <span class="fme-page-footer__sep">/</span>
-        <a href="https://altvisewp.com/support/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Support', 'footnotes-made-easy' ); ?></a>
+        <?php
+        // Route Support to priority support for active Pro license holders,
+        // otherwise to the public WordPress.org support forum.
+        $fme_pro_licensed = defined( 'FME_PRO_VERSION' )
+            && function_exists( 'fmep_fs' )
+            && fmep_fs()
+            && fmep_fs()->is_paying();
+        $fme_support_url  = $fme_pro_licensed
+            ? 'https://altvisewp.com/account/#!/support'
+            : 'https://wordpress.org/support/plugin/footnotes-made-easy/';
+        ?>
+        <a href="<?php echo esc_url( $fme_support_url ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Support', 'footnotes-made-easy' ); ?></a>
         <span class="fme-page-footer__sep">/</span>
         <a href="https://docs.altvisewp.com/footnotes-made-easy/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Docs', 'footnotes-made-easy' ); ?></a>
         <span class="fme-page-footer__sep">/</span>
