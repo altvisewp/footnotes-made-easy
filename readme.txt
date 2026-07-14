@@ -32,6 +32,23 @@ Footnotes Made Easy is a simple but powerful plugin for adding footnotes to your
 * Compatible with the Classic Editor and the Gutenberg block editor
 * Lots of configuration options
 
+== Upgrade to Footnotes Made Easy Pro ==
+
+Need to cite sources properly? **[Footnotes Made Easy Pro](https://altvisewp.com/plugins/footnotes-made-easy/)** turns your footnotes into a full academic referencing system, built right on top of the free plugin you already use.
+
+**Pro features:**
+
+* **Academic citations** — format references in APA, MLA, and Chicago styles automatically
+* **10 source types** — books, journals, websites, newspapers, films, theses, and more, each formatted correctly for every style
+* **DOI & ISBN auto-fetch** — paste a DOI or ISBN and the source details (title, author, publisher, year) fill in for you
+* **Reusable Citation Library** — save a reference once and reuse it across any post; search, filter, and insert in seconds
+* **Gutenberg sidebar panel** — manage, edit, and insert footnotes directly from the block editor sidebar
+* **Priority support** — direct help from the AltviseWP team
+
+Everything in the free plugin keeps working exactly as it does today — Pro simply adds the citation and referencing tools on top.
+
+**[Get Footnotes Made Easy Pro &rarr;](https://altvisewp.com/plugins/footnotes-made-easy/)**
+
 **Footnotes Made Easy is a fork of [WP Footnotes](https://github.com/drzax/wp-footnotes "Github - wp-footnotes"), a plugin by Simon Elvery.**
 
 **For the latest code, planned enhancements and known issues, visit the [GitHub page](https://github.com/altvisewp/footnotes-made-easy/s "Github").**
@@ -138,6 +155,14 @@ Yes. Add the `(( ))` syntax directly inside any text block.
 = Does the plugin work on multisite? =
 
 Yes. See the Multisite section above for configuration details.
+
+= What's the difference between the free version and Pro? =
+
+The free version handles everything you need to add, number, link, and display footnotes. Footnotes Made Easy Pro adds a full academic referencing layer on top: automatic citation formatting in APA, MLA, and Chicago styles across 10 source types, DOI and ISBN auto-fetch, a reusable Citation Library, a Gutenberg sidebar panel, and priority support. Learn more on the [Pro page](https://altvisewp.com/plugins/footnotes-made-easy/).
+
+= Will upgrading to Pro change how my existing footnotes work? =
+
+No. Pro is built on top of the free plugin, so all your existing footnotes and settings keep working exactly as they do now. Pro simply adds the citation and referencing tools alongside what you already have.
 
 = Does the plugin remove its data when uninstalled? =
 
