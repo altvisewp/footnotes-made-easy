@@ -127,7 +127,7 @@ $fme_suite_icon = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAB
                         <?php esc_html_e( 'Activate license', 'footnotes-made-easy' ); ?>
                     </a>
                     <?php elseif ( ! $fme_pro_active ) : ?>
-                    <a href="<?php echo esc_url( fme_pro_page_url() ); ?>" class="fme-suite-row__link">
+                    <a href="<?php echo esc_url( fme_pro_page_url() ); ?>" target="_blank" rel="noopener noreferrer" class="fme-suite-row__link">
                         <?php esc_html_e( 'Get Pro', 'footnotes-made-easy' ); ?>
                         <svg viewBox="0 0 14 14" fill="none"><path d="M4 10L10 4M5 4h5v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </a>
@@ -156,7 +156,7 @@ $fme_suite_icon = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAB
                     printf(
                         /* translators: %s: "Get Pro" link */
                         esc_html__( 'Unlock citations, a reusable library, and more. %s', 'footnotes-made-easy' ),
-                        '<a href="' . esc_url( fme_pro_page_url() ) . '" class="fme-suite-card__foot-link">' . esc_html__( 'Get Pro', 'footnotes-made-easy' ) . '</a>' // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- URL and text escaped above.
+                        '<a href="' . esc_url( fme_pro_page_url() ) . '" target="_blank" rel="noopener noreferrer" class="fme-suite-card__foot-link">' . esc_html__( 'Get Pro', 'footnotes-made-easy' ) . '</a>' // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- URL and text escaped above.
                     );
                     ?>
                 <?php endif; ?>

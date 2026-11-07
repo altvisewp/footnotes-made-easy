@@ -36,6 +36,8 @@ $fme_show_upsell = class_exists( 'swas_wp_footnotes' ) ? swas_wp_footnotes::show
         </div>
     </div>
 
+    <?php footnotes_made_easy_render_bf_banner(); ?>
+
     <div class="fme-settings-grid">
 
         <!-- MAIN COLUMN -->
@@ -162,7 +164,7 @@ $fme_show_upsell = class_exists( 'swas_wp_footnotes' ) ? swas_wp_footnotes::show
                         <p class="fme-help-pro-card__desc"><?php esc_html_e( 'Manage all footnotes from the editor sidebar without leaving the post.', 'footnotes-made-easy' ); ?></p>
                     </div>
                 </div>
-                <a href="<?php echo esc_url( fme_pro_page_url() ); ?>" class="button button-primary fme-help-pro-cta">
+                <a href="<?php echo esc_url( fme_pro_page_url() ); ?>" target="_blank" rel="noopener noreferrer" class="button button-primary fme-help-pro-cta">
                     <?php esc_html_e( 'Upgrade to Footnotes Made Easy Pro', 'footnotes-made-easy' ); ?> →
                 </a>
             </div>

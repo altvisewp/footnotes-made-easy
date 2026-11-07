@@ -24,3 +24,6 @@ delete_option( 'swas_footnote_options' );
 delete_option( 'fme_preserve_settings_on_uninstall' );
 delete_option( 'fme_welcome_shown_version' );
 delete_option( 'fme_orphan_cleanup_version' );
+
+// Remove the Black Friday banner dismissal flags (one key per campaign id).
+delete_metadata( 'user', 0, 'fme_bf_banner_dismissed_bf2026', '', true );

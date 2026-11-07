@@ -2114,207 +2114,119 @@ body.fme-citations-locked .fme-settings-main {
     color: #ffb454;
 }
 
-/* ── In-plugin Pro sales page ─────────────────────────────────────────────── */
-
-.fme-pro-page * { box-sizing: border-box; }
-/* The Pro page now shares the .fme-wrap container (padding + width) with the
-   other plugin pages, so no separate max-width is needed here. */
-
-/* Hero */
-.fme-pro-hero {
-    background: linear-gradient(160deg, #3C3489, #241d52);
-    border-radius: 16px;
-    padding: 48px 40px;
-    text-align: center;
-    color: #fff;
-    margin: 20px 0 28px;
-}
-.fme-pro-hero__badge {
-    display: inline-block;
-    background: rgba(255,255,255,0.14);
-    color: #fff;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 6px 14px;
-    border-radius: 20px;
-    margin-bottom: 18px;
-}
-.fme-pro-hero__title {
-    color: #fff;
-    font-size: 30px;
-    font-weight: 700;
-    line-height: 1.15;
-    margin: 0 0 14px;
-    padding: 0;
-}
-.fme-pro-hero__sub {
-    font-size: 16px;
-    line-height: 1.6;
-    color: rgba(255,255,255,0.8);
-    max-width: 620px;
-    margin: 0 auto 26px;
-}
-.fme-pro-hero__cta {
-    display: inline-block;
-    background: #F19727;
-    color: #fff;
-    font-weight: 600;
-    font-size: 15px;
-    text-decoration: none;
-    padding: 12px 28px;
-    border-radius: 9px;
-    box-shadow: 0 8px 22px rgba(241,151,39,0.32);
-}
-.fme-pro-hero__cta:hover { background: #e08512; color: #fff; }
-
-/* Features */
-.fme-pro-features {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-    margin-bottom: 32px;
-}
-.fme-pro-feature {
-    background: #fff;
-    border: 1px solid #e7e3f1;
-    border-radius: 14px;
-    padding: 24px;
-}
-.fme-pro-feature__icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 11px;
-    background: linear-gradient(150deg, #534AB7, #3C3489);
-    color: #fff;
-    margin-bottom: 14px;
-}
-.fme-pro-feature h3 { font-size: 16px; margin: 0 0 6px; color: #211b31; }
-.fme-pro-feature p { font-size: 13.5px; color: #5a5470; margin: 0; line-height: 1.55; }
-
-/* Ratings */
-.fme-pro-ratings {
-    background: #241d52;
-    border-radius: 16px;
-    padding: 34px 40px;
-    margin-bottom: 32px;
-    color: #fff;
-}
-.fme-pro-ratings__head {
+/* ── Black Friday banner ─────────────────────────────────── */
+.fme-bf-banner {
+    position: relative;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 26px;
-    flex-wrap: wrap;
-}
-.fme-pro-ratings__score { font-size: 34px; font-weight: 700; line-height: 1; }
-.fme-pro-ratings__stars { display: inline-flex; gap: 2px; color: #F19727; }
-.fme-pro-ratings__label { color: rgba(255,255,255,0.7); font-size: 14px; }
-.fme-pro-reviews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.fme-pro-review {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 12px;
-    padding: 20px;
-}
-.fme-pro-review__stars { color: #F19727; display: flex; gap: 2px; margin-bottom: 10px; }
-.fme-pro-review p { font-size: 13.5px; line-height: 1.55; color: rgba(255,255,255,0.9); margin: 0 0 12px; }
-.fme-pro-review__author { font-size: 13px; font-weight: 600; color: #fff; }
-
-/* Pricing */
-.fme-pro-pricing { text-align: center; margin-bottom: 20px; }
-.fme-pro-pricing__title { font-size: 26px; margin: 0 0 8px; color: #211b31; }
-.fme-pro-pricing__sub { font-size: 15px; color: #5a5470; margin: 0 0 24px; }
-.fme-pro-coupon {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: linear-gradient(135deg, #fff6e9, #ffeccf);
-    border: 1.5px dashed #F19727;
-    border-radius: 12px;
-    padding: 12px 20px;
-    margin-bottom: 28px;
-    color: #8a4b00;
-    font-size: 14px;
-}
-.fme-pro-coupon svg { color: #d97919; flex-shrink: 0; }
-.fme-pro-coupon strong { color: #211b31; letter-spacing: 0.03em; }
-.fme-pro-plans {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
     gap: 18px;
-    text-align: left;
-    align-items: start;
-}
-.fme-pro-plan {
-    position: relative;
-    background: #fff;
-    border: 1px solid #e7e3f1;
-    border-radius: 14px;
-    padding: 28px 24px;
-}
-.fme-pro-plan--featured {
-    border: 2px solid #534AB7;
-    box-shadow: 0 20px 46px -20px rgba(83,74,183,0.4);
-}
-.fme-pro-plan__badge {
-    position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #534AB7;
+    margin: 0 0 1.5rem;
+    padding: 16px 56px 16px 22px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #211b31 0%, #3b3189 60%, #534AB7 100%);
     color: #fff;
+    transition: opacity 0.2s ease;
+}
+.fme-bf-banner--hiding { opacity: 0; }
+.fme-bf-banner__badge {
+    flex-shrink: 0;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #F19727;
+    color: #211b31;
     font-size: 11px;
     font-weight: 700;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 5px 14px;
-    border-radius: 20px;
     white-space: nowrap;
 }
-.fme-pro-plan__name { font-size: 20px; font-weight: 700; margin: 0 0 6px; color: #211b31; }
-.fme-pro-plan__tagline { font-size: 13px; color: #5a5470; margin: 0 0 18px; line-height: 1.45; min-height: 38px; }
-.fme-pro-plan__price { display: flex; align-items: baseline; gap: 2px; margin-bottom: 18px; }
-.fme-pro-plan__currency { font-size: 20px; font-weight: 600; color: #5a5470; }
-.fme-pro-plan__amount { font-size: 40px; font-weight: 700; line-height: 1; color: #211b31; }
-.fme-pro-plan__period { font-size: 14px; color: #5a5470; }
-.fme-pro-plan__btn {
-    display: block;
-    text-align: center;
-    background: #f0effb;
-    color: #534AB7;
-    font-weight: 600;
-    font-size: 14px;
-    text-decoration: none;
-    padding: 11px;
-    border-radius: 9px;
-    margin-bottom: 20px;
-}
-.fme-pro-plan__btn:hover { background: #534AB7; color: #fff; }
-.fme-pro-plan--featured .fme-pro-plan__btn { background: #534AB7; color: #fff; }
-.fme-pro-plan--featured .fme-pro-plan__btn:hover { background: #3C3489; }
-.fme-pro-plan__list { list-style: none; margin: 0; padding: 0; }
-.fme-pro-plan__list li {
+.fme-bf-banner__text {
+    flex: 1;
     display: flex;
-    align-items: flex-start;
-    gap: 9px;
-    font-size: 13.5px;
-    color: #5a5470;
-    margin-bottom: 10px;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+.fme-bf-banner__title { font-size: 15px; line-height: 1.35; color: #fff; }
+.fme-bf-banner__sub { font-size: 13px; line-height: 1.45; color: rgba(255, 255, 255, 0.85); }
+.fme-bf-banner__code {
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    padding: 1px 7px;
+    border: 1px dashed #F19727;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+.fme-bf-banner__code:hover { background: rgba(255, 255, 255, 0.18); }
+.fme-bf-banner__code:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.fme-bf-banner__copied {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    z-index: 2;
+    margin-left: 8px;
+    padding: 3px 9px;
+    border-radius: 6px;
+    background: #fff;
+    color: #211b31;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0;
     line-height: 1.4;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: opacity 0.15s ease;
 }
-.fme-pro-plan__list li svg { color: #16a34a; flex-shrink: 0; margin-top: 2px; }
-.fme-pro-pricing__note { font-size: 13px; color: #5a5470; margin-top: 24px; }
-
-@media (max-width: 960px) {
-    .fme-pro-features, .fme-pro-reviews, .fme-pro-plans { grid-template-columns: 1fr 1fr; }
+.fme-bf-banner__copied.is-visible { opacity: 1; }
+.fme-bf-banner a.fme-bf-banner__cta {
+    flex-shrink: 0;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background: #F19727;
+    color: #211b31;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.15s ease;
 }
-@media (max-width: 640px) {
-    .fme-pro-features, .fme-pro-reviews, .fme-pro-plans { grid-template-columns: 1fr; }
-    .fme-pro-hero { padding: 36px 24px; }
+.fme-bf-banner a.fme-bf-banner__cta:hover,
+.fme-bf-banner a.fme-bf-banner__cta:focus { background: #ffb04d; color: #211b31; }
+.fme-bf-banner__cta:focus-visible,
+.fme-bf-banner__close:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.fme-bf-banner__close {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+}
+.fme-bf-banner__close:hover { background: rgba(255, 255, 255, 0.15); color: #fff; }
+@media (max-width: 782px) {
+    .fme-bf-banner { flex-wrap: wrap; padding: 16px 48px 16px 16px; }
+    .fme-bf-banner__text { flex-basis: 100%; order: 3; }
+    .fme-bf-banner a.fme-bf-banner__cta { order: 4; }
+    .fme-bf-banner__close { top: 12px; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .fme-bf-banner, .fme-bf-banner a.fme-bf-banner__cta, .fme-bf-banner__code, .fme-bf-banner__copied { transition: none; }
 }

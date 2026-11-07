@@ -50,6 +50,8 @@ if (
         </div>
     </div>
 
+    <?php footnotes_made_easy_render_bf_banner(); ?>
+
     <?php if ( isset( $_GET['ms_saved'] ) ) : ?>
     <div class="fme-notice fme-notice-success fme-notice-autodismiss" id="fme-saved-notice">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M7 0a7 7 0 100 14A7 7 0 007 0zm3.293 4.793l-4 4a1 1 0 01-1.414 0l-2-2a1 1 0 111.414-1.414L5.586 6.672l3.293-3.293a1 1 0 111.414 1.414z"/></svg>

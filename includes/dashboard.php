@@ -62,6 +62,8 @@ foreach ( $fme_all_content as $fme_pid ) {
         </div>
     </div>
 
+    <?php footnotes_made_easy_render_bf_banner(); ?>
+
     <!-- ── Two-column layout ────────────────────────────────── -->
     <div class="fme-dashboard">
 

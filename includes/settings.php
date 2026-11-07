@@ -34,6 +34,8 @@ $fme_version = get_plugin_data( plugin_dir_path( __FILE__ ) . '../footnotes-made
         </div>
     </div>
 
+    <?php footnotes_made_easy_render_bf_banner(); ?>
+
     <!-- ── Saved notice ─────────────────────────────────────── -->
     <?php if ( ! empty( $_POST['save_options'] ) && ! empty( $_POST['footnotes_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['footnotes_nonce'] ) ), 'footnotes-nonce' ) ) : ?>
     <?php do_action( 'fme_settings_saved' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- fme_ is the plugin prefix. ?>
@@ -63,7 +65,7 @@ $fme_version = get_plugin_data( plugin_dir_path( __FILE__ ) . '../footnotes-made
             <?php endif; ?>
         </button>
         <?php else : ?>
-        <a href="<?php echo esc_url( fme_pro_page_url() ); ?>"
+        <a href="<?php echo esc_url( fme_pro_page_url() ); ?>" target="_blank" rel="noopener noreferrer"
            class="fme-inner-tab fme-inner-tab--pro fme-inner-tab--link">
             <?php esc_html_e( 'Citations', 'footnotes-made-easy' ); ?>
             <span class="fme-pro-tab-badge">PRO</span>

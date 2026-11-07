@@ -3,9 +3,9 @@ Contributors: lumiblog, dartiss, manuell, ocenchris
 Tags: footnotes, bibliography, formatting, reference, citations
 Donate link: https://lumumbas.blog/support-wp-plugins
 Requires at least: 6.0
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 3.2.2
+Stable tag: 3.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -185,8 +185,9 @@ Full documentation is at [docs.altvisewp.com/footnotes-made-easy](https://docs.a
 
 I use semantic versioning, with the first release being 1.0.
 
-= 3.2.2 [August 10, 2026] =
-* Fixed: The footnotes header and footer text could not be translated on multilingual sites — every language showed the same text. These strings can now be translated per language via Polylang and WPML. Reported on the support forum. On sites without a translation plugin, nothing changes.
+= 3.2.2 [August 12, 2026] =
+* Fixed: The footnotes header and footer text could not be translated on multilingual sites [Issue #53](https://github.com/altvisewp/footnotes-made-easy/issues/53).
+* Fixed: Minor UI fixes
 
 = 3.2.1 [June 23, 2026] =
 * Fixed: Duplicate footnote text appearing at the bottom of the page when Pretty Tooltips was enabled. [#51](https://github.com/altvisewp/footnotes-made-easy/issues/51)
@@ -230,5 +231,5 @@ I use semantic versioning, with the first release being 1.0.
 
 == Upgrade Notice ==
 
-= 3.2.1 =
-Fixes a duplicate footnote appearing at the bottom of the page with Pretty Tooltips enabled, and footnote text rendering too large on some themes. Recommended for all users.
+= 3.2.2 =
+Minor UI fixes and translation issues fixes. 

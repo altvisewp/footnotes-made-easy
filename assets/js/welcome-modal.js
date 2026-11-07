@@ -88,7 +88,7 @@
                 '</div>' +
                 '</div>';
             ctaHtml =
-                '<a href="' + ( config.proUrl || '#' ) + '" class="fme-welcome-modal__cta" id="fme-welcome-cta" data-action="link">See Pro features →</a>' +
+                '<a href="' + ( config.proUrl || '#' ) + '" target="_blank" rel="noopener noreferrer" class="fme-welcome-modal__cta" id="fme-welcome-cta" data-action="link">See Pro features →</a>' +
                 '<button type="button" class="fme-welcome-modal__cta-secondary" id="fme-welcome-dismiss" data-action="dismiss">Explore the free version</button>';
         }
 
@@ -231,10 +231,9 @@
             ctaBtn.addEventListener( 'click', function ( e ) {
                 var action = ctaBtn.getAttribute( 'data-action' );
                 if ( action === 'link' ) {
-                    // Same-tab internal link to the Pro page. This fetch is a
-                    // best-effort; navigation can cut it off, so the Pro page
-                    // also records the dismissal server-side on load.
-                    markShown();
+                    // The Pro landing page opens in a new tab, so wp-admin stays
+                    // put: close the modal here and record it as seen.
+                    dismiss();
                 } else if ( action === 'activate-license' ) {
                     openLicenseActivation();
                 } else {

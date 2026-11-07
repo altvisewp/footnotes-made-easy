@@ -19,6 +19,83 @@
         if ( closeBtn ) { closeBtn.addEventListener( 'click', dismissNotice ); }
     } );
 
+    /* ── Black Friday banner: dismiss via close button or CTA ─ */
+    document.querySelectorAll( '.fme-bf-banner' ).forEach( function( banner ) {
+        var url   = banner.getAttribute( 'data-ajax-url' );
+        var nonce = banner.getAttribute( 'data-nonce' );
+
+        // Persist the dismissal. sendBeacon survives the page navigation that
+        // the CTA click triggers; fetch with keepalive is the fallback.
+        function persistDismissal() {
+            var data = new FormData();
+            data.append( 'action', 'fme_dismiss_bf_banner' );
+            data.append( 'nonce', nonce );
+            if ( navigator.sendBeacon && navigator.sendBeacon( url, data ) ) { return; }
+            if ( window.fetch ) {
+                fetch( url, { method: 'POST', body: data, credentials: 'same-origin', keepalive: true } );
+            }
+        }
+
+        var closeBtn = banner.querySelector( '.fme-bf-banner__close' );
+        if ( closeBtn ) {
+            closeBtn.addEventListener( 'click', function() {
+                persistDismissal();
+                banner.classList.add( 'fme-bf-banner--hiding' );
+                setTimeout( function() { banner.style.display = 'none'; }, 200 );
+            } );
+        }
+
+        // Click the coupon code to copy it. Does not dismiss the banner.
+        var codeBtn = banner.querySelector( '.fme-bf-banner__code' );
+        if ( codeBtn ) {
+            var tip      = codeBtn.querySelector( '.fme-bf-banner__copied' );
+            var tipTimer = null;
+
+            // Clipboard API needs a secure context (https); fall back to execCommand otherwise.
+            var copyText = function( text ) {
+                if ( navigator.clipboard && window.isSecureContext ) {
+                    return navigator.clipboard.writeText( text );
+                }
+                return new Promise( function( resolve, reject ) {
+                    var ta = document.createElement( 'textarea' );
+                    ta.value = text;
+                    ta.setAttribute( 'readonly', '' );
+                    ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;';
+                    document.body.appendChild( ta );
+                    ta.select();
+                    var ok = false;
+                    try { ok = document.execCommand( 'copy' ); } catch ( e ) { ok = false; }
+                    document.body.removeChild( ta );
+                    return ok ? resolve() : reject();
+                } );
+            };
+
+            codeBtn.addEventListener( 'click', function() {
+                copyText( codeBtn.getAttribute( 'data-code' ) ).then( function() {
+                    if ( ! tip ) { return; }
+                    tip.textContent = codeBtn.getAttribute( 'data-copied' );
+                    tip.classList.add( 'is-visible' );
+                    clearTimeout( tipTimer );
+                    tipTimer = setTimeout( function() {
+                        tip.classList.remove( 'is-visible' );
+                        tip.textContent = '';
+                    }, 1800 );
+                } ).catch( function() {
+                    // Copy blocked: select the code so the user can press Ctrl/Cmd+C.
+                    var range = document.createRange();
+                    range.selectNodeContents( codeBtn.querySelector( '.fme-bf-banner__code-text' ) );
+                    var sel = window.getSelection();
+                    sel.removeAllRanges();
+                    sel.addRange( range );
+                } );
+            } );
+        }
+
+        // CTA keeps its normal navigation; it just also dismisses the banner.
+        var cta = banner.querySelector( '.fme-bf-banner__cta' );
+        if ( cta ) { cta.addEventListener( 'click', persistDismissal ); }
+    } );
+
     if ( typeof fmeSettings === 'undefined' ) { return; }
 
     /* ── Tab switching (Settings page) ─────────────────────── */
