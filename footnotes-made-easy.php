@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Plugin version — kept in sync with the header above. Used for cache-busting
-// and for the welcome-modal version comparison (more reliable than reading the
+// and for the once-per-version orphan cleanup (more reliable than reading the
 // header at runtime via get_plugin_data(), which isn't always loaded on admin_init).
 if ( ! defined( 'FME_VERSION' ) ) {
     define( 'FME_VERSION', '3.2.3' );
@@ -56,8 +56,6 @@ function fme_pro_page_url() { // phpcs:ignore WordPress.NamingConventions.Prefix
  *
  * The in-plugin Pro page was retired. The "Upgrade to Pro" submenu item still
  * uses that slug, and old bookmarks may too, so redirect before any output.
- * Also records the welcome notice as seen, as the old page did, so arriving
- * here from the welcome flow never leaves it showing again.
  */
 function fme_redirect_legacy_pro_page() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Uses the plugin's established fme_ prefix.
     // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- $_GET['page'] is a routing parameter, not form data.
@@ -65,12 +63,6 @@ function fme_redirect_legacy_pro_page() { // phpcs:ignore WordPress.NamingConven
 
     if ( 'footnotes-pro' !== $page || defined( 'FME_PRO_VERSION' ) || ! current_user_can( 'manage_options' ) ) {
         return;
-    }
-
-    $welcome_version = get_transient( 'fme_show_welcome' );
-    if ( $welcome_version ) {
-        update_option( 'fme_welcome_shown_version', $welcome_version );
-        delete_transient( 'fme_show_welcome' );
     }
 
     wp_redirect( fme_pro_page_url() ); // phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect -- Fixed external URL, not user input.
@@ -193,20 +185,6 @@ function fme_enqueue_deactivation_survey( string $hook ): void { // phpcs:ignore
 add_action( 'admin_enqueue_scripts', 'fme_enqueue_deactivation_survey' );
 
 /**
- * Welcome modal — shown once after fresh install or update from an older version.
- */
-function fme_check_welcome_modal(): void { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy function name, renaming would break existing installations.
-    $current_ver    = FME_VERSION;
-    $stored_ver     = get_option( 'fme_welcome_shown_version', '' );
-
-    // Show if never shown, or if version has changed
-    if ( $stored_ver !== $current_ver ) {
-        set_transient( 'fme_show_welcome', $current_ver, DAY_IN_SECONDS );
-    }
-}
-add_action( 'admin_init', 'fme_check_welcome_modal' );
-
-/**
  * One-time cleanup of files removed from the plugin package.
  *
  * The WordPress.org updater overwrites files but does not reliably delete files
@@ -228,6 +206,7 @@ function fme_cleanup_orphan_files(): void { // phpcs:ignore WordPress.NamingConv
     $fme_orphans = array(
         'includes/coming-soon-pro.php',
         'assets/js/coming-soon.js',
+        'assets/js/welcome-modal.js',
     );
 
     foreach ( $fme_orphans as $fme_orphan ) {
@@ -243,86 +222,13 @@ function fme_cleanup_orphan_files(): void { // phpcs:ignore WordPress.NamingConv
         }
     }
 
+    // Leftovers from the retired welcome modal.
+    delete_option( 'fme_welcome_shown_version' );
+    delete_transient( 'fme_show_welcome' );
+
     update_option( 'fme_orphan_cleanup_version', FME_VERSION );
 }
 add_action( 'admin_init', 'fme_cleanup_orphan_files' );
-
-function fme_enqueue_welcome_modal( string $hook ): void { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy function name, renaming would break existing installations.
-    // Only show on our own plugin pages
-    $fme_pages = [
-        'toplevel_page_footnotes-made-easy',
-        'footnotes_page_footnotes-settings',
-        'footnotes_page_footnotes-tools',
-        'footnotes_page_footnotes-help',
-        'footnotes_page_fme-pro-library',
-    ];
-    if ( ! in_array( $hook, $fme_pages, true ) ) return;
-
-    $show_version = get_transient( 'fme_show_welcome' );
-    if ( ! $show_version ) return;
-
-    $stored_ver  = get_option( 'fme_welcome_shown_version', '' );
-    $is_update   = ! empty( $stored_ver );
-
-    // Determine the Pro state so the modal can address each audience correctly:
-    //   'active'   — Pro installed and license is paying
-    //   'inactive' — Pro installed but no active license
-    //   'none'     — free user, Pro not installed
-    $fme_pro_installed = defined( 'FME_PRO_VERSION' );
-    $fme_pro_active    = $fme_pro_installed
-        && function_exists( 'fmep_fs' )
-        && fmep_fs()
-        && fmep_fs()->is_paying();
-    if ( $fme_pro_active ) {
-        $fme_pro_state = 'active';
-    } elseif ( $fme_pro_installed ) {
-        $fme_pro_state = 'inactive';
-    } else {
-        $fme_pro_state = 'none';
-    }
-
-    $js_path = plugin_dir_path( __FILE__ ) . 'assets/js/welcome-modal.js';
-    wp_enqueue_script(
-        'fme-welcome-modal',
-        plugin_dir_url( __FILE__ ) . 'assets/js/welcome-modal.js',
-        [],
-        file_exists( $js_path ) ? filemtime( $js_path ) : '1.0',
-        true
-    );
-
-    wp_localize_script( 'fme-welcome-modal', 'fmeWelcome', [
-        'show'      => true,
-        'version'   => $show_version,
-        'isUpdate'  => $is_update,
-        'proState'  => $fme_pro_state,
-        'proUrl'    => fme_pro_page_url(),
-        'accountUrl'=> 'https://altvisewp.com/account/',
-        'ajaxUrl'   => admin_url( 'admin-ajax.php' ),
-        'nonce'     => wp_create_nonce( 'fme_welcome_nonce' ),
-    ] );
-
-    // Preblur the page until the welcome modal appears (added via inline style on a registered handle)
-    wp_register_style( 'fme-welcome-preblur', false ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
-    wp_enqueue_style( 'fme-welcome-preblur' );
-    wp_add_inline_style(
-        'fme-welcome-preblur',
-        '#wpcontent,#wpbody-content,#adminmenu{filter:blur(4px) brightness(0.92);pointer-events:none;user-select:none;transition:filter 0.3s ease;}body.wp-admin::before{content:"";position:fixed;inset:0;background:rgba(20,18,40,0.28);z-index:9998;pointer-events:none;}'
-    );
-}
-add_action( 'admin_enqueue_scripts', 'fme_enqueue_welcome_modal' );
-
-// AJAX handler — mark welcome as shown
-add_action( 'wp_ajax_fme_dismiss_welcome', function (): void {
-    check_ajax_referer( 'fme_welcome_nonce', 'nonce' );
-    $version = get_transient( 'fme_show_welcome' );
-    if ( $version ) {
-        update_option( 'fme_welcome_shown_version', $version );
-        delete_transient( 'fme_show_welcome' );
-    }
-    wp_send_json_success();
-} );
-
-
 
 // Inject admin CSS for full-width purple Upgrade to Pro menu item
 function fme_pro_menu_css() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Legacy function name, renaming would break existing installations.
