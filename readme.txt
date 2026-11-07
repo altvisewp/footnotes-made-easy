@@ -1,7 +1,7 @@
 === Footnotes Made Easy ===
 Contributors: lumiblog, dartiss, manuell, ocenchris
 Tags: footnotes, bibliography, formatting, reference, citations
-Donate link: https://lumumbas.blog/support-wp-plugins
+Donate link: https://lumumbas-blog.co.ke/support-wp-plugins
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
@@ -34,7 +34,7 @@ Footnotes Made Easy is a simple but powerful plugin for adding footnotes to your
 
 == Upgrade to Footnotes Made Easy Pro ==
 
-Need to cite sources properly? **[Footnotes Made Easy Pro](https://altvisewp.com/plugins/footnotes-made-easy/)** turns your footnotes into a full academic referencing system, built right on top of the free plugin you already use.
+Need to cite sources properly? **[Footnotes Made Easy Pro](https://altvisewp.com/fme-pro/)** turns your footnotes into a full academic referencing system, built right on top of the free plugin you already use.
 
 **Pro features:**
 
@@ -47,7 +47,7 @@ Need to cite sources properly? **[Footnotes Made Easy Pro](https://altvisewp.com
 
 Everything in the free plugin keeps working exactly as it does today — Pro simply adds the citation and referencing tools on top.
 
-**[Get Footnotes Made Easy Pro &rarr;](https://altvisewp.com/plugins/footnotes-made-easy/)**
+**[Get Footnotes Made Easy Pro &rarr;](https://altvisewp.com/fme-pro/)**
 
 **Footnotes Made Easy is a fork of [WP Footnotes](https://github.com/drzax/wp-footnotes "Github - wp-footnotes"), a plugin by Simon Elvery.**
 
@@ -185,6 +185,9 @@ Full documentation is at [docs.altvisewp.com/footnotes-made-easy](https://docs.a
 
 I use semantic versioning, with the first release being 1.0.
 
+= 3.2.3 [November 07, 2026] =
+* Fixed: Minor UI and copy fixes
+
 = 3.2.2 [August 12, 2026] =
 * Fixed: The footnotes header and footer text could not be translated on multilingual sites [Issue #53](https://github.com/altvisewp/footnotes-made-easy/issues/53).
 * Fixed: Minor UI fixes
@@ -231,5 +234,5 @@ I use semantic versioning, with the first release being 1.0.
 
 == Upgrade Notice ==
 
-= 3.2.2 =
-Minor UI fixes and translation issues fixes. 
+= 3.2.3 =
+Minor UI and copy fixes. 
